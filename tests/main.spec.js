@@ -1,14 +1,10 @@
 import { expect } from 'chai';
-import { search, searchAlbuns, searchTracks, searchPlaylists, searchArtists } from '../src/main';
+import {
+  search, searchAlbuns, searchTracks, searchPlaylists, searchArtists,
+} from '../src/main';
 
 describe('Spotify Wrapper', () => {
-
   describe('Smoke tests', () => {
-    // search generico -> + mais de 1 tipo;
-    // search albuns;
-    // search tracks;
-    // search artists;
-    // search playlists;
     it('should exist the search method', () => {
       expect(search).to.exist;
     });
@@ -26,4 +22,9 @@ describe('Spotify Wrapper', () => {
     });
   });
 
+  describe('Generic Search', () => {
+    it('should call fetch function', () => {
+      const artists = search();
+    });
+  });
 });
