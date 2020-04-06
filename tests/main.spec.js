@@ -38,25 +38,37 @@ describe('Spotify Wrapper', () => {
   });
 
   describe('Generic Search', () => {
-    it('should call fetch function', () => {
-      const fetchedStub = sinon.stub(global, 'fetch');
-      const artists = search();
+    let fetchedStub;
 
-      expect(fetchedStub).to.have.been.calledOnce;
+    beforeEach(() => {
+      fetchedStub = sinon.stub(global, 'fetch');
+    });
 
+    afterEach(() => {
       fetchedStub.restore();
     });
 
+    it('should call fetch function', () => {
+      const artists = search();
+      expect(fetchedStub).to.have.been.calledOnce;
+    });
+
     it('should received the correct URL to fetch', () => {
-      const fetchedStub = sinon.stub(global, 'fetch');
+      context('passing one type', () => {
+        const artists = search('Incubus', 'artist');
+        expect(fetchedStub).to.have.been
+          .calledWith('https://api.spotify.com/v1/search?q=Incubus&type=artist');
 
-      const artists = search('Incubus', 'artist');
-      expect(fetchedStub).to.have.been
-        .calledWith('https://api.spotify.com/v1/search?q=Incubus&type=artist');
+        const albums = search('Incubus', 'album');
+        expect(fetchedStub).to.have.been
+          .calledWith('https://api.spotify.com/v1/search?q=Incubus&type=album');
+      });
 
-      const albums = search('Incubus', 'album');
-      expect(fetchedStub).to.have.been
-        .calledWith('https://api.spotify.com/v1/search?q=Incubus&type=album');
+      context('passing more than one type', () => {
+        const artistsAndAlbums = search('Incubus', ['artist', 'album']);
+        expect(fetchedStub).to.have.been
+          .calledWith('https://api.spotify.com/v1/search?q=Incubus&type=artist,album');
+      });
     });
   });
 });
