@@ -3,7 +3,6 @@
 import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-import sinonStubPromise from 'sinon-stub-promise';
 
 import {
   search, searchAlbums, searchArtists, searchTracks, searchPlaylists,
@@ -12,7 +11,6 @@ import {
 global.fetch = require('node-fetch');
 
 chai.use(sinonChai);
-sinonStubPromise(sinon);
 
 describe('Spotify Wrapper', () => {
   describe('Smoke tests', () => {
@@ -39,9 +37,11 @@ describe('Spotify Wrapper', () => {
 
   describe('Generic Search', () => {
     let fetchedStub;
+    let promise;
 
     beforeEach(() => {
       fetchedStub = sinon.stub(global, 'fetch');
+      promise = fetchedStub.resolves({ json: () => ({ album: 'name' }) });
     });
 
     afterEach(() => {
