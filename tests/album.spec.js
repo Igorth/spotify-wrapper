@@ -67,12 +67,12 @@ describe('Album', () => {
         .calledWith('https://api.spotify.com/v1/albums/?ids=382ObEPsp2rxGrnsizN5TX,1A2GTWGtFfWp7KSQTwWOyo');
     });
 
-    // it('should return the correct data from Promise', () => {
-    //   const albums = getAlbums(['382ObEPsp2rxGrnsizN5TX', '1A2GTWGtFfWp7KSQTwWOyo']);
-    //   albums.then((data) => {
-    //     expect(data).to.be.eql({ album: 'name' });
-    //   });
-    // });
+    it('should return the correct data from Promise', () => {
+      const albums = getAlbums(['382ObEPsp2rxGrnsizN5TX', '1A2GTWGtFfWp7KSQTwWOyo']);
+      albums.then((data) => {
+        expect(data).to.be.eql({ album: 'name' });
+      });
+    });
   });
 
   describe('Get Albums Tracks', () => {

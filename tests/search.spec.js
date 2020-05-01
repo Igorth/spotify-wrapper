@@ -18,7 +18,7 @@ describe('Search', () => {
 
   beforeEach(() => {
     fetchedStub = sinon.stub(global, 'fetch');
-    fetchedStub.resolves({ json: () => {} });
+    fetchedStub.resolves({ json: () => ({ album: 'name' }) });
   });
 
   afterEach(() => {
@@ -71,12 +71,12 @@ describe('Search', () => {
       });
     });
 
-    // it('should return the JSON data from the Promise', () => {
-    //   const artists = search('Incubus', 'artist');
-    //   artists.then((data) => {
-    //     expect(data).to.be.eql({ artist: 'Incubus' });
-    //   });
-    // });
+    it('should return the JSON data from the Promise', () => {
+      const artists = search('Incubus', 'artist');
+      artists.then((data) => {
+        expect(data).to.be.eql({ album: 'name' });
+      });
+    });
   });
 
   describe('Search Artists', () => {
